@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// prisma/schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
+}
+
+enum RoleUser {
+  ADMIN
+  BORROWER
+}
+
+enum Language{
+  ENGLISH
+  INDONESIAN
+}
+
+enum BorrowStatus {
+  AVAILABLE
+  BORROWED
+  OVERDUE
+  RESERVED
+  LOST
+  DAMAGED
+  RETURNED
+}
+
+model User{
+  id                      String      @id @default(uuid())
+  email                   String      @unique
+  firstName               String
+  lastName                String
+  contact                 String      @unique
+  password                String
+  role                    RoleUser
+  username                String      @unique
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+  borrowedBooks           Borrow[]
+}
+
+model Borrow{
+  id                      String      @id @default(uuid())
+  userId                  String
+  user                    User        @relation(fields: [userId], references: [id])
+  bookId                  String
+  book                    Book        @relation(fields: [bookId], references: [id])
+  dueDate                 DateTime
+  status                  BorrowStatus
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+}
+
+model Book{
+  id                      String      @id @default(uuid())
+  branchId                String
+  branch                  Branch      @relation(fields: [branchId], references: [id])
+  title                   String
+  typeId                  String      @unique
+  type                    BookType    @relation(fields: [typeId], references: [id])
+  language                Language
+  author                  String
+  stock                   Int
+  borrow                  Borrow[]
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+}
+
+model BookType{
+  id                      String      @id @default(uuid())
+  name                    String      @unique
+  book                    Book?
+}
+
+model Branch{
+  id                      String      @id @default(uuid())
+  name                    String
+  contact                 String      @unique
+  location                String
+  books                   Book[]
+} 
