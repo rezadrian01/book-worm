@@ -1,16 +1,20 @@
-import { Button, buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
-import Link from 'next/link'
-import React, { FC } from 'react'
+import React, { FC } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+
+import whiteLogo from "@/public/whiteLogo.svg";
 
 interface AuthTitleProps {
-    type: "SIGNIN" | "SIGNUP"
+    type: "SIGNIN" | "SIGNUP",
 }
 
 const AuthTitle: FC<AuthTitleProps> = ({ type }) => {
     return (
         <div className={cn('hidden md:flex h-full bg-black text-white text-center flex-col justify-center items-center gap-6', type === "SIGNIN" ? "rounded-l-[5rem]" : "rounded-r-[5rem]")}>
-            <span className='space-y-2'>
+            <span className='space-y-2 flex flex-col items-center'>
+                <Image draggable={false} className='mb-4' width={120} src={whiteLogo} alt='White logo' />
                 <h1 className='text-6xl'>Book Worm</h1>
                 <p className='text-xl'>LIBRARY</p>
             </span>

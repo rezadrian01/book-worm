@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: "Book Worm | Auth",
 };
 
-export default function AuthLayout({
+export default function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
