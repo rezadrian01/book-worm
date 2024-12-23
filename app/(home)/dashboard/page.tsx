@@ -6,7 +6,7 @@ import { signout } from '../../(auth)/auth/lib/actions';
 const DashboardPage = async () => {
     const session = await auth();
     return (
-        <div>
+        <div className='h-[200vh]'>
             DashboardPage
             <form action={async () => {
                 "use server";

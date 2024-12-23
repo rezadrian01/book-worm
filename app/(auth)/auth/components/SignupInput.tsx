@@ -7,7 +7,7 @@ import { CircleAlert } from 'lucide-react'
 import Link from 'next/link'
 import InputError from './InputError'
 
-import blackLogo from "@/public/blackLogo.svg";
+import blackLogo from "@/public/svg/blackLogo.svg";
 
 interface SignupInputProps {
     isPending: boolean,

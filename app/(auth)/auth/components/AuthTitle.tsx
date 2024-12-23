@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-import whiteLogo from "@/public/whiteLogo.svg";
+import whiteLogo from "@/public/svg/whiteLogo.svg";
 
 interface AuthTitleProps {
     type: "SIGNIN" | "SIGNUP",
