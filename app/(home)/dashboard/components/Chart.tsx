@@ -38,14 +38,14 @@ export const Chart: FC<ChartProps> = ({ booksData }) => {
 
     const chartData = [
         { status: "borrow", books: booksData.borrow, fill: "var(--color-borrow)" },
-        { status: "return", books: booksData.return, fill: "var(--color-safari)" },
+        { status: "return", books: booksData.return, fill: "var(--color-return)" },
     ]
 
 
     return (
         <ChartContainer
             config={chartConfig}
-            className="mx-auto aspect-square max-h-[50rem]"
+            className="mx-auto aspect-square max-h-[45rem]"
         >
             <PieChart>
                 <ChartTooltip
