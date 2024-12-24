@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
     Table,
@@ -20,6 +20,11 @@ import { Branch } from '@prisma/client';
 
 const BranchPage = () => {
     const [searchInput, setSearchInput] = useState<string>("");
+    const [branches, setBranches] = useState<Branch[]>([]);
+
+    useEffect(() => {
+        fetch("/api/branches").then(res => res.json()).then(data => setBranches(data.branches)).catch(err => console.log(err));
+    }, [])
 
     const DUMMY_DATA = [
         {
@@ -69,7 +74,7 @@ const BranchPage = () => {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[100px] font-bold">ID</TableHead>
+                            <TableHead className="w-[100px] font-bold">#</TableHead>
                             <TableHead className='font-bold'>Name</TableHead>
                             <TableHead className='font-bold'>Contact</TableHead>
                             <TableHead className="text-right font-bold">Location</TableHead>
@@ -77,9 +82,9 @@ const BranchPage = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {DUMMY_DATA.map(branch => {
+                        {branches.map((branch, index) => {
                             return <TableRow key={branch.id}>
-                                <TableCell className="font-medium py-4">{branch.id}</TableCell>
+                                <TableCell className="font-medium py-4">{++index}.</TableCell>
                                 <TableCell className='py-4'>{branch.name}</TableCell>
                                 <TableCell className='py-4'>{branch.contact}</TableCell>
                                 <TableCell className="text-right py-4">{branch.location}</TableCell>

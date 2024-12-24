@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { CircleAlert } from "lucide-react"
 import { useRouter } from "next/navigation";
-import { FC } from "react"
+import { FC, useRef } from "react"
 
 interface DeleteDialogProps {
     message?: string,
@@ -27,6 +27,7 @@ const defaultMessage = "Are you certain you wish to proceed with the deletion of
 
 const DeleteDialog: FC<DeleteDialogProps> = ({ message = defaultMessage, children, url }) => {
     const router = useRouter();
+    const closeBtnRef = useRef<HTMLButtonElement>(null);
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -34,6 +35,7 @@ const DeleteDialog: FC<DeleteDialogProps> = ({ message = defaultMessage, childre
             method: "DELETE"
         }).then(res => res.json()).then(data => {
             router.refresh();
+            closeBtnRef?.current?.click();
         }).catch(err => console.log(err));
     }
 
@@ -55,7 +57,7 @@ const DeleteDialog: FC<DeleteDialogProps> = ({ message = defaultMessage, childre
                 <DialogFooter>
                     <form className="flex gap-4" onSubmit={handleSubmit}>
                         <DialogClose asChild>
-                            <Button type="button" variant={'ghost'}>Cancel</Button>
+                            <Button ref={closeBtnRef} type="button" variant={'ghost'}>Cancel</Button>
                         </DialogClose>
                         <Button variant={"destructive"} type="submit">Delete</Button>
                     </form>
