@@ -8,7 +8,6 @@ import { usePathname } from 'next/navigation';
 
 const SidebarContent = () => {
     const pathname = usePathname();
-    console.log(pathname)
     return (
         <nav className='w-full'>
             <ul className='flex flex-col items-center gap-6 text-lg w-full'>
