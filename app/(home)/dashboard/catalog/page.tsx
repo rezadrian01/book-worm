@@ -2,12 +2,11 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -47,6 +46,7 @@ const CatalogPage = () => {
 
     return (
         <div className='p-10 space-y-10'>
+
             {/* Header */}
             <header className='flex justify-between'>
                 <div className='flex gap-4'>
@@ -62,6 +62,8 @@ const CatalogPage = () => {
                     </div>
                 </div>
             </header>
+
+            {/* Main */}
             <main>
                 <Table>
                     <TableHeader>
