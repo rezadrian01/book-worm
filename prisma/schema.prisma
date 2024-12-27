@@ -87,4 +87,6 @@ model Branch{
   contact                 String      @unique
   location                String
   books                   Book[]
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
 } 

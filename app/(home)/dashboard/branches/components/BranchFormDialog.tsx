@@ -14,7 +14,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Branch } from "@prisma/client"
 import { DialogClose } from "@radix-ui/react-dialog"
-import { CirclePlus } from "lucide-react"
 import { useRouter } from "next/navigation";
 import { FC, useRef, useState } from "react"
 
@@ -48,6 +47,7 @@ const BranchFormDialog: FC<BranchFormDialogProps> = ({ type, branch, children })
                 body: JSON.stringify({ ...data })
             });
             const resData = await response.json();
+            router.refresh();
             dialogCloseRef?.current?.click();
         } catch (error) {
             console.log(error);
