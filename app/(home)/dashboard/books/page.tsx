@@ -1,8 +1,6 @@
-'use client';
-
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import React, { useState } from 'react'
+import React from 'react'
 
 import {
     Table,
@@ -14,31 +12,18 @@ import {
 } from "@/components/ui/table"
 import { CirclePlus, Search } from 'lucide-react';
 import BookFormDialog from './components/BookFormDialog';
+import { DataTable } from '@/components/ui/data-table';
+import { columns } from './components/columns';
+import { Book, Branch } from '@prisma/client';
 
 
-const BookPage = () => {
-    const [searchInput, setSearchInput] = useState<string>("");
-
-    const DUMMY_DATA = [
-        {
-            id: "1",
-            title: "Rembulan Tenggelam di Wajahmu",
-            type: "Fiction",
-            language: 'Indonesian',
-            stock: 10
-        },
-        {
-            id: "2",
-            title: "Atomic Habits",
-            type: "Self Improvement",
-            language: 'Indonesian',
-            stock: 10
-        },
-    ]
-
-    const handleSearchClick = () => {
-        console.log(searchInput);
-    }
+const BookPage = async () => {
+    const response = await fetch(`${process.env.BASE_URL}/api/books`);
+    const data = await response.json();
+    const books: Book[] = data.books;
+    const responseBranch = await fetch(`${process.env.BASE_URL}/api/branches`);
+    const dataBranch = await responseBranch.json();
+    const branches: Branch[] = dataBranch.branches;
 
     return (
         <div className='p-10 space-y-10'>
@@ -49,44 +34,24 @@ const BookPage = () => {
                     <h2 className='text-3xl font-semibold'>Book Management</h2>
                 </div>
                 <div className='flex gap-4'>
-                    <BookFormDialog type='ADD' />
-                    <div className='relative'>
+                    <BookFormDialog branches={branches} type='ADD'>
+                        <Button>
+                            <CirclePlus />
+                            Add Book
+                        </Button>
+                    </BookFormDialog>
+                    {/* <div className='relative'>
                         <Input value={searchInput} onChange={({ target }) => setSearchInput(target.value)} type='text' name='search' placeholder='Search by ID...' />
                         <button onClick={handleSearchClick} className='absolute top-[.6rem] right-2'>
                             <Search size={15} />
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </header>
 
             {/* Main  */}
             <main>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead className="w-[100px] font-bold">ID</TableHead>
-                            <TableHead className='font-bold'>Title</TableHead>
-                            <TableHead className='font-bold'>Type</TableHead>
-                            <TableHead className="text-right font-bold">Language</TableHead>
-                            <TableHead className="text-right font-bold">Availability</TableHead>
-                            <TableHead className="text-right font-bold">Action</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {DUMMY_DATA.map(borrow => {
-                            return <TableRow key={borrow.id}>
-                                <TableCell className="font-medium py-4">{borrow.id}</TableCell>
-                                <TableCell className='py-4'>{borrow.title}</TableCell>
-                                <TableCell className='py-4'>{borrow.type}</TableCell>
-                                <TableCell className="text-right py-4">{borrow.language}</TableCell>
-                                <TableCell className="text-right py-4">{borrow.stock > 0 ? "Available" : "Not Available"}</TableCell>
-                                <TableCell className="text-right py-4">Action</TableCell>
-                            </TableRow>
-                        })}
-
-                    </TableBody>
-                </Table>
-
+                <DataTable columns={columns} data={books} />
             </main>
         </div>
     )

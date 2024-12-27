@@ -1,4 +1,4 @@
-import { BookCopy, BookText, LayoutDashboard, Store, Tag, Users } from "lucide-react";
+import { Blocks, BookCopy, BookText, LayoutDashboard, Store, Tag, Users } from "lucide-react";
 const ADMIN_SIDEBAR_CONTENT = [
     {
         id: 1,
@@ -20,12 +20,18 @@ const ADMIN_SIDEBAR_CONTENT = [
     },
     {
         id: 4,
+        title: "Book Types",
+        href: "/dashboard/book-types",
+        icon: Blocks
+    },
+    {
+        id: 5,
         title: "Users",
         href: "/dashboard/users",
         icon: Users
     },
     {
-        id: 5,
+        id: 6,
         title: "Branches",
         href: "/dashboard/branches",
         icon: Store

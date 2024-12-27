@@ -78,7 +78,7 @@ model Book{
 model BookType{
   id                      String      @id @default(uuid())
   name                    String      @unique
-  book                    Book?
+  book                    Book[]
 }
 
 model Branch{
