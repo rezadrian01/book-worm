@@ -24,3 +24,12 @@ export function getHoursAndDate() {
     formatedDate
   }
 }
+
+export const getRoleColor = (role: string) => {
+  switch (role) {
+    case "ADMIN":
+      return "bg-sky-500 text-white";
+    case "BORROWER":
+      return "bg-green-500 text-white";
+  }
+}
