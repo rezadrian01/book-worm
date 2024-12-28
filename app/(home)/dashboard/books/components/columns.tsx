@@ -3,10 +3,11 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Book } from "@prisma/client"
 import ActionButton from "./ActionButton"
+import { BookWithRelations } from "@/app/lib/definition"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export const columns: ColumnDef<Book>[] = [
+export const columns: ColumnDef<BookWithRelations>[] = [
     {
         id: "number",
         header: () => <h5>#</h5>,
@@ -38,10 +39,10 @@ export const columns: ColumnDef<Book>[] = [
     },
     {
         id: "availability",
-        header: () => <h5>Availability</h5>,
+        header: () => <h5 className="text-center">Availability</h5>,
         cell: ({ row }) => {
             const book = row.original;
-            return <div className="py-4">
+            return <div className="py-4 text-center">
                 {book.stock > 0 ? "Available" : "Not Available"}
             </div>
         }
@@ -52,7 +53,7 @@ export const columns: ColumnDef<Book>[] = [
         cell: ({ row }) => {
             const book = row.original;
             return <div className={`py-4 text-center`}>
-                {book.typeId}
+                {book.type.name}
             </div>
         }
     },

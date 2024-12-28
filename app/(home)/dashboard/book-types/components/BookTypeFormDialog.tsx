@@ -72,7 +72,7 @@ const BookTypeFormDialog: FC<BookTypeFormDialogProps> = ({ children, type, bookT
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
-                        <DialogTitle>{type === "ADD" ? "Add" : "Update"} Book Type</DialogTitle>
+                        <DialogTitle>{type === "ADD" ? "Add" : type === "EDIT" ? "Update" : "Detail"} Book Type</DialogTitle>
                         <DialogDescription>
                         </DialogDescription>
                     </DialogHeader>

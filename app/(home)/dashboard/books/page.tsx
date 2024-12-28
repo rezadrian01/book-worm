@@ -1,29 +1,25 @@
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import React from 'react'
-
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
 import { CirclePlus, Search } from 'lucide-react';
 import BookFormDialog from './components/BookFormDialog';
 import { DataTable } from '@/components/ui/data-table';
 import { columns } from './components/columns';
-import { Book, Branch } from '@prisma/client';
+import { BookType, Branch } from '@prisma/client';
+import { BookWithRelations } from '@/app/lib/definition';
 
 
 const BookPage = async () => {
     const response = await fetch(`${process.env.BASE_URL}/api/books`);
     const data = await response.json();
-    const books: Book[] = data.books;
+    const books: BookWithRelations[] = data.books;
+
     const responseBranch = await fetch(`${process.env.BASE_URL}/api/branches`);
     const dataBranch = await responseBranch.json();
     const branches: Branch[] = dataBranch.branches;
+
+    const responseBookTypes = await fetch(`${process.env.BASE_URL}/api/book-types`);
+    const dataBookTypes = await responseBookTypes.json();
+    const bookTypes: BookType[] = dataBookTypes.bookTypes;
 
     return (
         <div className='p-10 space-y-10'>
@@ -34,7 +30,7 @@ const BookPage = async () => {
                     <h2 className='text-3xl font-semibold'>Book Management</h2>
                 </div>
                 <div className='flex gap-4'>
-                    <BookFormDialog branches={branches} type='ADD'>
+                    <BookFormDialog branches={branches} type='ADD' bookTypes={bookTypes}>
                         <Button>
                             <CirclePlus />
                             Add Book

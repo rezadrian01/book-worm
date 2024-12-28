@@ -22,3 +22,29 @@ export const GET = async (req: NextRequest) => {
         console.log(error);
     }
 }
+
+export const POST = async (req: NextRequest) => {
+    try {
+        const { title, author, typeId, branchId, stock, language } = await req.json();
+        // validation
+        if (!title || !author || !typeId || !branchId || !stock || !language) {
+            return NextResponse.json({ success: false, message: "All fields are required" });
+        }
+        const stockNumber = Number(stock);
+        await prisma.book.create({
+            data: {
+                title,
+                author,
+                typeId,
+                branchId,
+                stock: stockNumber,
+                language,
+            }
+        });
+        return NextResponse.json({ success: true });
+    } catch (error: any) {
+        console.error("Error:", error);
+        return NextResponse.json({ success: false, message: error.message || "Internal Server Error" }, { status: 500 });
+    }
+
+}

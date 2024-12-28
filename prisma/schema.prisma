@@ -65,7 +65,7 @@ model Book{
   branchId                String
   branch                  Branch      @relation(fields: [branchId], references: [id])
   title                   String
-  typeId                  String      @unique
+  typeId                  String      
   type                    BookType    @relation(fields: [typeId], references: [id])
   language                Language
   author                  String
