@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
     try {
-        const posts = await prisma.borrow.findMany({
+        const borrows = await prisma.borrow.findMany({
             include: {
                 book: true
             }
         })
-        return NextResponse.json({ success: true, posts });
+        return NextResponse.json({ success: true, borrows });
     } catch (error) {
         console.log(error);
     }
